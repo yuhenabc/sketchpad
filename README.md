@@ -1,2 +1,3 @@
 # sketchpad
-use sketchpad
+
+use sketchpad to draw anything

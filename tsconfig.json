@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "umd",
+    "removeComments": true,
+    "lib": [
+      "es5",
+      "dom",
+      "es2015.core"
+    ],
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

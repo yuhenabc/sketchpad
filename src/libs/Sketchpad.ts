@@ -24,6 +24,7 @@ interface Options {
     canvas: HTMLCanvasElement
     width?: number
     height?: number
+    onDrawEnd?: Function
 }
 
 /**
@@ -43,6 +44,9 @@ export default class Sketchpad {
         this.canvas = options.canvas
         this.ctx = this.canvas.getContext('2d')
         this.onDrawEnd = null
+        if (typeof options.onDrawEnd === 'function') {
+            this.onDrawEnd = options.onDrawEnd
+        }
 
         // 设置画布属性
         this.canvas.width = options.width

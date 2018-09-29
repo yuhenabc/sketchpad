@@ -4,6 +4,7 @@ interface Options {
     canvas: HTMLCanvasElement
     width?: number
     height?: number
+    onDrawEnd?: Function
 }
 
 export default function (options: Options) {

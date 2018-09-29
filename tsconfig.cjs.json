@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "esnext",
+    "module": "commonjs",
     "removeComments": true,
+    "listFiles": true,
     "lib": [
       "es5",
       "es6",
       "dom"
-    ]
-  }
+    ],
+    "outDir": "cjs"
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

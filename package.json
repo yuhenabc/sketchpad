@@ -2,9 +2,13 @@
   "name": "sketchpad",
   "version": "1.0.0",
   "description": "use sketchpad to draw anything",
-  "main": "index.js",
+  "main": "cjs/sketchpad.js",
   "scripts": {
-    "test": ""
+    "test": "",
+    "build-esm": "tsc -p tsconfig.esm.json",
+    "build-cjs": "tsc -p tsconfig.cjs.json",
+    "build-umd": "rollup -c && rollup -c --environment BUILD:production",
+    "build": "npm run build-esm && npm run build-cjs && npm run build-umd"
   },
   "repository": {
     "type": "git",
@@ -18,5 +22,12 @@
   "bugs": {
     "url": "https://github.com/yuhenabc/sketchpad/issues"
   },
-  "homepage": "https://github.com/yuhenabc/sketchpad#readme"
+  "homepage": "https://github.com/yuhenabc/sketchpad#readme",
+  "devDependencies": {
+    "rollup": "^0.66.2",
+    "rollup-plugin-typescript": "^1.0.0",
+    "rollup-plugin-uglify": "^6.0.0",
+    "tslib": "^1.9.3",
+    "typescript": "^3.1.1"
+  }
 }

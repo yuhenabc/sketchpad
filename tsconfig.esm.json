@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "module": "esnext",
     "removeComments": true,
+    "listFiles": true,
     "lib": [
       "es5",
       "es6",
       "dom"
-    ]
-  }
+    ],
+    "outDir": "esm"
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

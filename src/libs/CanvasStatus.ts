@@ -1,7 +1,4 @@
-interface Point {
-    x: number
-    y: number
-}
+import Point from '../interfaces/Point.d'
 
 /**
  * Class CanvasStatus

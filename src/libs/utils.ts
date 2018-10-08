@@ -1,7 +1,4 @@
-interface Point {
-    x: number
-    y: number
-}
+import Point from '../interfaces/Point.d'
 
 export function getRealPoint(canvas: HTMLCanvasElement, e: any): Point {
     const ex = e.clientX || e.touches[0].clientX
@@ -41,7 +38,10 @@ export function drawRectangle(context: CanvasRenderingContext2D, points: Array<P
     const end = points[1]
     context.rect(start.x, start.y, end.x - start.x, end.y - start.y)
     if (isSolid) {
+        const originLineWidth = context.lineWidth
+        context.lineWidth = 0
         context.fill()
+        context.lineWidth = originLineWidth
         console.log(`solid rectangle from [${start.x}, ${start.y}] to [${end.x}, ${end.y}]`)
     } else {
         context.stroke()
@@ -57,7 +57,10 @@ export function drawCircle(context: CanvasRenderingContext2D, points: Array<Poin
     const h = end.y - start.y
     context.arc(start.x + w / 2, start.y + h / 2, Math.hypot(w, h) / 2, 0, Math.PI * 2, true)
     if (isSolid) {
+        const originLineWidth = context.lineWidth
+        context.lineWidth = 0
         context.fill()
+        context.lineWidth = originLineWidth
         console.log(`round from [${start.x}, ${start.y}] to [${end.x}, ${end.y}]`)
     } else {
         context.stroke()

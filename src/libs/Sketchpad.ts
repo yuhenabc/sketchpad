@@ -1,3 +1,5 @@
+import Point from '../interfaces/Point.d'
+import Options from '../interfaces/Options.d'
 import CanvasStatus from './CanvasStatus'
 import {
     getRealPoint,
@@ -14,18 +16,6 @@ import {
     clearAll,
 } from './utils'
 
-
-interface Point {
-    x: number
-    y: number
-}
-
-interface Options {
-    canvas: HTMLCanvasElement
-    width?: number
-    height?: number
-    onDrawEnd?: Function
-}
 
 /**
  * Class Sketchpad
@@ -44,6 +34,10 @@ export default class Sketchpad {
         this.canvas = options.canvas
         this.ctx = this.canvas.getContext('2d')
         this.onDrawEnd = null
+        let lineWidth = 2
+        if (typeof options.lineWidth === 'number') {
+            lineWidth = options.lineWidth
+        }
         if (typeof options.onDrawEnd === 'function') {
             this.onDrawEnd = options.onDrawEnd
         }
@@ -54,19 +48,17 @@ export default class Sketchpad {
         this.ctx.globalCompositeOperation = 'source-over'
         this.ctx.lineCap = 'round'
         this.ctx.lineJoin = 'round'
+        this.ctx.lineWidth = lineWidth
 
         // 创建虚拟画布
-        const rect = this.canvas.getBoundingClientRect()
         this.vcanvas = document.createElement('canvas')
         this.vcanvas.style.position = 'fixed'
-        this.vcanvas.width = rect.width
-        this.vcanvas.height = rect.height
-        this.vcanvas.style.top = rect.top + 'px'
-        this.vcanvas.style.left = rect.left + 'px'
+        this.resize()
         this.vctx = this.vcanvas.getContext('2d')
         this.vctx.globalCompositeOperation = 'source-over'
         this.vctx.lineCap = 'round'
         this.vctx.lineJoin = 'round'
+        this.vctx.lineWidth = lineWidth
         this.canvas.parentElement.appendChild(this.vcanvas)
 
         // 添加事件
@@ -76,11 +68,22 @@ export default class Sketchpad {
         this.vcanvas.onmousedown = this.touchStartHandler.bind(this)
         this.vcanvas.onmousemove = this.touchMoveHandler.bind(this)
         this.vcanvas.onmouseup = this.touchEndHandler.bind(this)
+        this.resize = this.resize.bind(this)
+        window.addEventListener('resize', this.resize)
     }
 
-    destory() {
+    resize() {
+        const rect = this.canvas.getBoundingClientRect()
+        this.vcanvas.width = rect.width
+        this.vcanvas.height = rect.height
+        this.vcanvas.style.top = rect.top + 'px'
+        this.vcanvas.style.left = rect.left + 'px'
+    }
+
+    destroy() {
         this.canvas.parentElement.removeChild(this.vcanvas)
         this.vcanvas = null
+        window.removeEventListener('resize', this.resize)
     }
 
     send(event: string, data: any) {

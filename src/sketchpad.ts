@@ -1,11 +1,5 @@
 import Sketchpad from "./libs/Sketchpad"
-
-interface Options {
-    canvas: HTMLCanvasElement
-    width?: number
-    height?: number
-    onDrawEnd?: Function
-}
+import Options from './interfaces/Options.d'
 
 export default function (options: Options) {
     return new Sketchpad(options)

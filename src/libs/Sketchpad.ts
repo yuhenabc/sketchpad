@@ -45,6 +45,9 @@ export default class Sketchpad {
         // 设置画布属性
         this.canvas.width = options.width
         this.canvas.height = options.height
+        this.canvas.style.backgroundRepeat = 'no-repeat'
+        this.canvas.style.backgroundPosition = 'center'
+        this.canvas.style.backgroundSize = 'cover'
         this.ctx.globalCompositeOperation = 'source-over'
         this.ctx.lineCap = 'round'
         this.ctx.lineJoin = 'round'
@@ -285,6 +288,14 @@ export default class Sketchpad {
         this.ctx.lineWidth = width
         this.vctx.lineWidth = width
         console.log(`set line width to "${width}"`)
+    }
+
+    changeBackground(url: string) {
+        if (url) {
+            this.canvas.style.backgroundImage = `url(${url})`
+        } else {
+            this.canvas.style.backgroundImage = 'none'
+        }
     }
 
     drawLineDirectly(points: Array<Point>) {

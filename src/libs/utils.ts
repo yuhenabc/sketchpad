@@ -1,4 +1,4 @@
-import Point from '../interfaces/Point.d'
+import {Point} from '../d/types'
 
 export function getRealPoint(canvas: HTMLCanvasElement, e: any): Point {
     const ex = e.clientX || e.touches[0].clientX

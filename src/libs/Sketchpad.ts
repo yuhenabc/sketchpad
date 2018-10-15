@@ -1,5 +1,4 @@
-import Point from '../interfaces/Point.d'
-import Options from '../interfaces/Options.d'
+import {Point, Options} from '../d/types'
 import CanvasStatus from './CanvasStatus'
 import {
     getRealPoint,

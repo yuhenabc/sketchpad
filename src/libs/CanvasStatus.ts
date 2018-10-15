@@ -1,4 +1,4 @@
-import Point from '../interfaces/Point.d'
+import {Point} from '../d/types'
 
 /**
  * Class CanvasStatus

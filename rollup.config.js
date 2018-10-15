@@ -19,7 +19,7 @@ const config1 = {
 const config2 = {
     input: 'src/sketchpad.ts',
     output: {
-        file: 'dist/sketchpad-production.umd.js',
+        file: 'dist/sketchpad.production.umd.js',
         format: 'umd',
         name: 'Sketchpad'
     },

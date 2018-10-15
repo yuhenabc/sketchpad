@@ -6,25 +6,30 @@ export default class Sketchpad {
         this.canvas = options.canvas;
         this.ctx = this.canvas.getContext('2d');
         this.onDrawEnd = null;
+        let lineWidth = 2;
+        if (typeof options.lineWidth === 'number') {
+            lineWidth = options.lineWidth;
+        }
         if (typeof options.onDrawEnd === 'function') {
             this.onDrawEnd = options.onDrawEnd;
         }
         this.canvas.width = options.width;
         this.canvas.height = options.height;
+        this.canvas.style.backgroundRepeat = 'no-repeat';
+        this.canvas.style.backgroundPosition = 'center';
+        this.canvas.style.backgroundSize = 'cover';
         this.ctx.globalCompositeOperation = 'source-over';
         this.ctx.lineCap = 'round';
         this.ctx.lineJoin = 'round';
-        const rect = this.canvas.getBoundingClientRect();
+        this.ctx.lineWidth = lineWidth;
         this.vcanvas = document.createElement('canvas');
         this.vcanvas.style.position = 'fixed';
-        this.vcanvas.width = rect.width;
-        this.vcanvas.height = rect.height;
-        this.vcanvas.style.top = rect.top + 'px';
-        this.vcanvas.style.left = rect.left + 'px';
+        this.resize();
         this.vctx = this.vcanvas.getContext('2d');
         this.vctx.globalCompositeOperation = 'source-over';
         this.vctx.lineCap = 'round';
         this.vctx.lineJoin = 'round';
+        this.vctx.lineWidth = lineWidth;
         this.canvas.parentElement.appendChild(this.vcanvas);
         this.vcanvas.ontouchstart = this.touchStartHandler.bind(this);
         this.vcanvas.ontouchmove = this.touchMoveHandler.bind(this);
@@ -32,10 +37,20 @@ export default class Sketchpad {
         this.vcanvas.onmousedown = this.touchStartHandler.bind(this);
         this.vcanvas.onmousemove = this.touchMoveHandler.bind(this);
         this.vcanvas.onmouseup = this.touchEndHandler.bind(this);
+        this.resize = this.resize.bind(this);
+        window.addEventListener('resize', this.resize);
     }
-    destory() {
+    resize() {
+        const rect = this.canvas.getBoundingClientRect();
+        this.vcanvas.width = rect.width;
+        this.vcanvas.height = rect.height;
+        this.vcanvas.style.top = rect.top + 'px';
+        this.vcanvas.style.left = rect.left + 'px';
+    }
+    destroy() {
         this.canvas.parentElement.removeChild(this.vcanvas);
         this.vcanvas = null;
+        window.removeEventListener('resize', this.resize);
     }
     send(event, data) {
         if (typeof this.onDrawEnd === 'function') {
@@ -213,6 +228,14 @@ export default class Sketchpad {
         this.ctx.lineWidth = width;
         this.vctx.lineWidth = width;
         console.log(`set line width to "${width}"`);
+    }
+    changeBackground(url) {
+        if (url) {
+            this.canvas.style.backgroundImage = `url(${url})`;
+        }
+        else {
+            this.canvas.style.backgroundImage = 'none';
+        }
     }
     drawLineDirectly(points) {
         drawLine(this.ctx, points);

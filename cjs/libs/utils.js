@@ -41,7 +41,10 @@ function drawRectangle(context, points, isSolid) {
     var end = points[1];
     context.rect(start.x, start.y, end.x - start.x, end.y - start.y);
     if (isSolid) {
+        var originLineWidth = context.lineWidth;
+        context.lineWidth = 0;
         context.fill();
+        context.lineWidth = originLineWidth;
         console.log("solid rectangle from [" + start.x + ", " + start.y + "] to [" + end.x + ", " + end.y + "]");
     }
     else {
@@ -59,7 +62,10 @@ function drawCircle(context, points, isSolid) {
     var h = end.y - start.y;
     context.arc(start.x + w / 2, start.y + h / 2, Math.hypot(w, h) / 2, 0, Math.PI * 2, true);
     if (isSolid) {
+        var originLineWidth = context.lineWidth;
+        context.lineWidth = 0;
         context.fill();
+        context.lineWidth = originLineWidth;
         console.log("round from [" + start.x + ", " + start.y + "] to [" + end.x + ", " + end.y + "]");
     }
     else {

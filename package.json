@@ -1,5 +1,5 @@
 {
-  "name": "sketchpad",
+  "name": "canvas-sketchpad",
   "version": "1.0.0",
   "description": "use sketchpad to draw anything",
   "main": "cjs/sketchpad.js",
